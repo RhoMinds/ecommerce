@@ -1,0 +1,5 @@
+{
+  "buildCommand": "cd ecommerce && npm install && npm run build",
+  "outputDirectory": "ecommerce/dist",
+  "installCommand": "echo skip"
+}
