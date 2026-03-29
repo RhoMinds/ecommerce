@@ -25,43 +25,46 @@ export const Shop = () => {
   const displayedProducts = sortedProducts.slice(0, 10);
 
   return (
-    <div className="bg-white min-h-screen flex flex-col pt-24">
+    <div className="min-h-screen bg-white pt-20 sm:pt-24 flex flex-col">
       <Navbar />
-      
+
       {/* Shop Header */}
-      <div className="bg-gray-50 py-16 px-6 md:px-12 border-b border-gray-100">
-        <div className="w-full">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} 
-            className="text-4xl md:text-5xl font-light tracking-tighter mb-4"
+      <div className="border-b border-gray-100 bg-gray-50 px-5 py-12 sm:px-6 md:px-12 md:py-16">
+        <div className="mx-auto w-full max-w-7xl">
+          <motion.h1
+            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            className="mb-4 text-3xl font-light tracking-tighter sm:text-4xl md:text-5xl"
           >
             Engineering <span className="font-bold">Catalog</span>
           </motion.h1>
-          <p className="text-gray-500 max-w-xl text-sm leading-relaxed">
+          <p className="max-w-xl text-sm leading-relaxed text-gray-500">
             Browse our full collection of premium forged wheels, aerodynamic carbon fiber upgrades, and bespoke interior finishes.
           </p>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-grow w-full px-6 md:px-12 py-12 flex flex-col md:flex-row gap-12">
-        
+      <div className="mx-auto flex w-full max-w-7xl flex-grow flex-col gap-10 px-5 py-10 sm:px-6 md:flex-row md:gap-12 md:px-12 md:py-12">
         {/* Sidebar Filters */}
         <aside className="w-full md:w-64 flex-shrink-0">
-          <div className="sticky top-32">
-            <div className="flex items-center gap-2 mb-6 text-xs uppercase tracking-widest font-semibold border-b border-gray-100 pb-4">
+          <div className="md:sticky md:top-32">
+            <div className="mb-5 flex items-center gap-2 border-b border-gray-100 pb-4 text-xs font-semibold uppercase tracking-widest">
               <Filter className="w-4 h-4" /> Filters
             </div>
-            
+
             <div className="space-y-6 text-sm">
               <div>
-                <h4 className="font-medium text-gray-900 mb-4">Category</h4>
-                <div className="space-y-3">
+                <h4 className="mb-4 font-medium text-gray-900">Category</h4>
+                <div className="flex flex-wrap gap-2 md:block md:space-y-3">
                   {categories.map((cat) => (
-                    <button 
+                    <button
                       key={cat}
                       onClick={() => setActiveCategory(cat)}
-                      className={`block w-full text-left transition-colors ${activeCategory === cat ? 'text-[#F9B303] font-semibold' : 'text-gray-500 hover:text-black'}`}
+                      className={`rounded-full border px-4 py-2 text-left transition-colors md:block md:w-full md:rounded-none md:border-0 md:px-0 md:py-0 ${
+                        activeCategory === cat
+                          ? 'border-[#F9B303] bg-[#FFF9E6] text-[#F9B303] font-semibold'
+                          : 'border-gray-200 text-gray-500 hover:border-gray-300 hover:text-black'
+                      }`}
                     >
                       {cat}
                     </button>
@@ -74,14 +77,14 @@ export const Shop = () => {
 
         {/* Product Grid */}
         <div className="flex-grow">
-          <div className="flex justify-between items-center mb-8 text-sm">
+          <div className="mb-8 flex flex-col gap-4 text-sm sm:flex-row sm:items-center sm:justify-between">
             <span className="text-gray-500">
               Showing {displayedProducts.length} of {filteredProducts.length} Results
             </span>
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="border-none bg-transparent text-gray-900 font-medium focus:ring-0 cursor-pointer"
+              className="w-full cursor-pointer rounded-full border border-gray-200 bg-white px-4 py-3 font-medium text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#F9B303] sm:w-auto"
               aria-label="Sort products"
             >
               <option value="recommended">Sort by: Recommended</option>
@@ -90,13 +93,12 @@ export const Shop = () => {
             </select>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-8 xl:gap-10">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 xl:gap-8">
             {displayedProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
         </div>
-
       </div>
 
       <Footer />

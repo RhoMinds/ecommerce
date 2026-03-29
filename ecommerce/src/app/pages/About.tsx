@@ -5,19 +5,19 @@ import { motion } from 'motion/react';
 
 export const About = () => {
   return (
-    <div className="bg-white min-h-screen flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
       <Navbar />
 
-      <main className="flex-grow pt-32 pb-20 px-6 md:px-12 max-w-6xl mx-auto w-full">
+      <main className="mx-auto w-full max-w-6xl flex-grow px-5 pb-20 pt-24 sm:px-6 md:px-12 md:pt-28">
         <motion.h1
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-4xl md:text-5xl font-light tracking-tighter mb-6"
+          className="mb-6 text-3xl font-light tracking-tighter sm:text-4xl md:text-5xl"
         >
           About <span className="font-bold">HUSTLE WRAPS</span>
         </motion.h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-10">
           <div className="md:col-span-2">
             <p className="text-gray-600 leading-relaxed mb-6">
               We design premium automotive accessories with a focus on fit, finish, and performance.

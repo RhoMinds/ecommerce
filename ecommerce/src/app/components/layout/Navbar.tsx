@@ -18,16 +18,39 @@ export const Navbar = () => {
     { name: 'Admin', path: '/admin' },
   ];
 
+  React.useEffect(() => {
+    setIsOpen(false);
+  }, [location.pathname]);
+
+  React.useEffect(() => {
+    if (!isOpen) return undefined;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isOpen]);
+
+  const showLightNav = isOpen || !isDarkBackground;
+  const navClassName = cn(
+    'fixed top-0 w-full z-50 flex items-center justify-between px-4 py-4 transition-all duration-300 sm:px-6 md:px-12 md:py-5',
+    showLightNav
+      ? 'bg-white/95 text-gray-900 border-b border-gray-100 shadow-sm backdrop-blur-xl'
+      : 'bg-transparent text-white'
+  );
+
   return (
     <>
-      <nav className={cn(
-        "fixed top-0 w-full z-50 transition-colors duration-300 px-6 py-5 md:px-12 flex items-center justify-between",
-        isDarkBackground ? "bg-transparent text-white" : "bg-white text-gray-900 border-b border-gray-100"
-      )}>
-        <Link to="/" className="text-base md:text-xl font-bold tracking-[0.12em] md:tracking-[0.2em] uppercase z-50 relative">
+      <nav className={navClassName}>
+        <Link
+          to="/"
+          className="relative z-50 max-w-[10rem] text-sm font-bold uppercase tracking-[0.14em] sm:max-w-none sm:text-base md:text-xl md:tracking-[0.2em]"
+        >
           HUSTLE WRAPS
         </Link>
-        
+
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center space-x-10 text-sm tracking-widest uppercase font-medium">
           {navLinks.map((link) => (
@@ -49,38 +72,84 @@ export const Navbar = () => {
           </Link>
         </div>
 
-        {/* Mobile Toggle */}
-        <button className="md:hidden z-50 relative" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+        <div className="relative z-50 flex items-center gap-3 md:hidden">
+          <Link
+            to="/cart"
+            className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-current/10 bg-black/5"
+            aria-label="View cart"
+          >
+            <ShoppingCart className="h-4 w-4" />
+            <span className="absolute right-1 top-1 flex h-4 w-4 items-center justify-center rounded-full bg-[#F9B303] text-[10px] font-bold text-black">
+              2
+            </span>
+          </Link>
+          <button
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-current/10 bg-black/5"
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          >
+            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </nav>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="fixed inset-0 z-40 bg-white text-gray-900 pt-24 px-6 flex flex-col space-y-8"
+            className="fixed inset-0 z-40 overflow-y-auto bg-white px-5 pb-8 pt-24 text-gray-900 sm:px-6"
           >
-            {navLinks.map((link) => (
-              <Link 
-                key={link.name} 
-                to={link.path} 
-                onClick={() => setIsOpen(false)}
-                className="text-2xl font-light tracking-widest uppercase border-b border-gray-100 pb-4"
-              >
-                {link.name}
-              </Link>
-            ))}
-            <div className="flex space-x-8 pt-4">
-              <Link to="/login" onClick={() => setIsOpen(false)} className="flex items-center space-x-3 text-lg">
-                <User /> <span>Account</span>
-              </Link>
-              <Link to="/cart" onClick={() => setIsOpen(false)} className="flex items-center space-x-3 text-lg">
-                <ShoppingCart /> <span>Cart (2)</span>
-              </Link>
+            <div className="mx-auto flex w-full max-w-xl flex-col gap-6">
+              <div className="rounded-[28px] border border-gray-100 bg-gray-50/90 p-4 sm:p-5">
+                <div className="text-[11px] uppercase tracking-[0.28em] text-gray-500">Navigate</div>
+                <div className="mt-4 flex flex-col">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.name}
+                      to={link.path}
+                      onClick={() => setIsOpen(false)}
+                      className="flex items-center justify-between border-b border-gray-200 py-4 text-lg font-medium uppercase tracking-[0.18em] last:border-b-0"
+                    >
+                      <span>{link.name}</span>
+                      <span className="text-xs text-gray-400">Open</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+                <Link
+                  to="/login"
+                  onClick={() => setIsOpen(false)}
+                  className="inline-flex items-center justify-center gap-3 rounded-full border border-gray-200 px-5 py-4 text-sm font-semibold uppercase tracking-[0.2em] transition hover:border-black"
+                >
+                  <User className="h-4 w-4" /> Account
+                </Link>
+                <Link
+                  to="/cart"
+                  onClick={() => setIsOpen(false)}
+                  className="inline-flex items-center justify-center gap-3 rounded-full bg-[#F9B303] px-5 py-4 text-sm font-semibold uppercase tracking-[0.2em] text-black transition hover:bg-[#e0a103]"
+                >
+                  <ShoppingCart className="h-4 w-4" /> Cart (2)
+                </Link>
+              </div>
+
+              <div className="rounded-[28px] border border-gray-100 p-5">
+                <div className="text-[11px] uppercase tracking-[0.28em] text-gray-500">Quick Help</div>
+                <p className="mt-3 text-sm leading-6 text-gray-600">
+                  Browse premium upgrades, manage your account, or jump into the admin and distributor portals from one menu.
+                </p>
+                <Link
+                  to="/contact"
+                  onClick={() => setIsOpen(false)}
+                  className="mt-4 inline-flex text-sm font-semibold uppercase tracking-[0.2em] text-black underline underline-offset-4"
+                >
+                  Contact support
+                </Link>
+              </div>
             </div>
           </motion.div>
         )}

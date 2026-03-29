@@ -18,16 +18,16 @@ export const Login = () => {
   };
 
   return (
-    <div className="bg-white min-h-screen flex flex-col">
+    <div className="min-h-screen bg-white flex flex-col">
       <Navbar />
-      
-      <div className="flex-grow flex items-center justify-center px-6 md:px-12 py-32">
-        <motion.div 
+
+      <div className="flex flex-grow items-center justify-center px-5 py-24 sm:px-6 md:px-12 md:py-32">
+        <motion.div
           initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
-          className="w-full max-w-md bg-gray-50 p-10 border border-gray-100"
+          className="w-full max-w-md border border-gray-100 bg-gray-50 p-6 sm:p-8 md:p-10"
         >
           <div className="text-center mb-10">
-            <h1 className="text-3xl font-light tracking-tighter mb-2 uppercase tracking-[0.2em] text-sm">
+            <h1 className="mb-2 text-sm font-light uppercase tracking-[0.2em] tracking-tighter sm:text-base">
               {isLogin ? 'Sign In' : 'Create Account'}
             </h1>
             <p className="text-gray-500 text-sm">Access your HUSTLE WRAPS portal</p>
@@ -39,13 +39,13 @@ export const Login = () => {
             )}
             <input type="email" placeholder="Email Address" required className="w-full border border-gray-300 p-4 focus:ring-1 focus:ring-[#F9B303] focus:outline-none text-sm" />
             <input type="password" placeholder="Password" required className="w-full border border-gray-300 p-4 focus:ring-1 focus:ring-[#F9B303] focus:outline-none text-sm" />
-            
-            <div className="flex items-center gap-4 text-sm mb-4">
+
+            <div className="mb-4 flex flex-col gap-3 text-sm sm:flex-row sm:items-center">
               <span className="text-gray-500">Demo Role:</span>
-              <select 
-                value={role} 
+              <select
+                value={role}
                 onChange={(e) => setRole(e.target.value as any)}
-                className="bg-transparent font-semibold focus:outline-none cursor-pointer border-b border-black pb-1"
+                className="w-full cursor-pointer border border-gray-300 bg-white px-4 py-3 font-semibold focus:outline-none focus:ring-1 focus:ring-[#F9B303] sm:w-auto sm:border-0 sm:border-b sm:bg-transparent sm:px-0 sm:py-1"
               >
                 <option value="customer">Customer</option>
                 <option value="distributor">Distributor</option>

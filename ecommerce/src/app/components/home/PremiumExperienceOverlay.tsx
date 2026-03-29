@@ -117,7 +117,7 @@ export const PremiumExperienceOverlay = ({ scrollYProgress }: { scrollYProgress:
             <motion.div
               key="hero"
               {...stageMotion}
-              className="relative z-10 grid w-full items-center gap-10 lg:grid-cols-[1.02fr_0.98fr] lg:gap-16"
+              className="relative z-10 grid w-full items-center gap-8 lg:grid-cols-[1.02fr_0.98fr] lg:gap-16"
             >
               <motion.div
                 initial={{ opacity: 0, x: -18 }}
@@ -179,13 +179,28 @@ export const PremiumExperienceOverlay = ({ scrollYProgress }: { scrollYProgress:
                     Browse Products <ChevronRight className="h-4 w-4" />
                   </Link>
                 </div>
+
+                <div className="mt-6 grid gap-3 md:grid-cols-3 lg:hidden">
+                  {services.map((service) => (
+                    <div
+                      key={service.title}
+                      className="rounded-[22px] border border-white/10 bg-white/[0.04] p-4"
+                    >
+                      <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#F9B303] text-black">
+                        <service.icon className="h-5 w-5" />
+                      </div>
+                      <div className="mt-4 text-sm font-semibold text-white">{service.title}</div>
+                      <p className="mt-2 text-xs leading-5 text-white/68">{service.desc}</p>
+                    </div>
+                  ))}
+                </div>
               </motion.div>
 
               <motion.div
                 initial={{ opacity: 0, x: 18 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, ease: stageEase, delay: 0.16 }}
-                className="relative rounded-[36px] border border-white/12 bg-black/48 p-5 shadow-[0_24px_90px_rgba(0,0,0,0.42)] backdrop-blur-2xl md:p-7"
+                className="relative hidden rounded-[36px] border border-white/12 bg-black/48 p-5 shadow-[0_24px_90px_rgba(0,0,0,0.42)] backdrop-blur-2xl lg:block lg:p-7"
               >
                 <motion.div
                   className="absolute inset-0 rounded-[36px] border border-[#F9B303]/12"
@@ -278,7 +293,7 @@ export const PremiumExperienceOverlay = ({ scrollYProgress }: { scrollYProgress:
                   </div>
                 </motion.div>
 
-                <div className="grid gap-4 md:grid-cols-3">
+                <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
                   {services.map((service, index) => (
                     <motion.div
                       key={service.title}
