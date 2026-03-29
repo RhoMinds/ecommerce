@@ -2,8 +2,7 @@ import React from 'react';
 import { motion, useTransform } from 'motion/react';
 import { ChevronRight, Paintbrush, ShieldCheck, SunMedium } from 'lucide-react';
 import { Link } from 'react-router';
-import { ScrollFrameCanvas } from '../experience/ScrollFrameCanvas';
-import { useIsMobile } from '../ui/use-mobile';
+import { ScrollScrubVideo } from '../experience/ScrollScrubVideo';
 
 const services = [
   {
@@ -24,8 +23,6 @@ const services = [
 ];
 
 export const PremiumExperienceOverlay = ({ scrollYProgress }: { scrollYProgress: any }) => {
-  const isMobile = useIsMobile();
-
   const introOpacity = useTransform(scrollYProgress, [0, 0.08, 0.28, 0.42], [0, 1, 1, 0]);
   const introY = useTransform(scrollYProgress, [0, 0.26, 0.42], [26, 0, -24]);
   const introScale = useTransform(scrollYProgress, [0, 0.28, 0.42], [0.992, 1, 0.994]);
@@ -45,18 +42,12 @@ export const PremiumExperienceOverlay = ({ scrollYProgress }: { scrollYProgress:
   return (
     <div className="sticky top-0 h-[100svh] overflow-hidden bg-black">
       <div className="absolute inset-0">
-        <ScrollFrameCanvas
+        <ScrollScrubVideo
           scrollYProgress={scrollYProgress}
-          totalFrames={300}
-          getFrameSrc={(frameIndex) => {
-            const base = `/experience/frames/ezgif-frame-${String(frameIndex + 1).padStart(3, '0')}`;
-            return [`${base}.webp`, `${base}.png`];
-          }}
+          src="/experience/sequence.mp4"
           className="absolute inset-0 h-full w-full"
-          prefetchWindow={isMobile ? 5 : 7}
-          maxCacheSize={isMobile ? 26 : 40}
-          smoothing={isMobile ? 0.42 : 0.34}
-          background="rgba(0,0,0,0)"
+          preload="auto"
+          smoothing={0.2}
         />
       </div>
 
