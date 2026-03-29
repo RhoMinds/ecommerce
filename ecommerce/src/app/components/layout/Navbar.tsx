@@ -7,7 +7,7 @@ import { motion, AnimatePresence } from 'motion/react';
 export const Navbar = () => {
   const [isOpen, setIsOpen] = React.useState(false);
   const location = useLocation();
-  const isDarkBackground = location.pathname === '/'; // Assuming home hero is dark initially
+  const isDarkBackground = location.pathname === '/'; // home hero is dark initially
 
   const navLinks = [
     { name: 'Experience', path: '/' },

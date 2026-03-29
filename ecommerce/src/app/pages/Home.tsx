@@ -1,11 +1,10 @@
 import React, { useRef } from 'react';
-import { motion, useScroll } from 'motion/react';
+import { useScroll } from 'motion/react';
 import { Link } from 'react-router';
 import { ArrowUpRight, ChevronRight, Compass, ShieldCheck, Sparkles } from 'lucide-react';
 import { Navbar } from '../components/layout/Navbar';
 import { Footer } from '../components/layout/Footer';
 import { PremiumExperienceOverlay } from '../components/home/PremiumExperienceOverlay';
-import { useIsMobile } from '../components/ui/use-mobile';
 import { MOCK_PRODUCTS } from '../data/mockData';
 
 const standards = [
@@ -28,105 +27,20 @@ const standards = [
 
 export const Home = () => {
   const storyRef = useRef<HTMLDivElement>(null);
-  const isMobile = useIsMobile();
   const { scrollYProgress } = useScroll({
     target: storyRef,
     offset: ['start start', 'end end'],
   });
 
   const featuredProducts = MOCK_PRODUCTS.slice(0, 4);
-  const mobileHeroImage =
-    'https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&h=1400&q=80';
 
   return (
     <div className="min-h-screen bg-black">
       <Navbar />
 
-      {isMobile ? (
-        <section className="relative min-h-[112svh] overflow-hidden bg-black px-5 pb-16 pt-28 text-white sm:px-6">
-          <motion.div
-            initial={{ opacity: 0, scale: 1.06, y: 18 }}
-            animate={{ opacity: 0.96, scale: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-y-0 right-[-24%] top-0 w-[104%]"
-          >
-            <motion.img
-              src={mobileHeroImage}
-              alt="Black sports car"
-              className="h-full w-full object-cover object-[68%_center]"
-              animate={{ scale: [1, 1.04, 1], y: [0, -12, 0] }}
-              transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-            />
-          </motion.div>
-          <div className="absolute inset-y-0 left-0 w-[62%] bg-gradient-to-r from-black via-black/88 to-transparent" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(249,179,3,0.2),transparent_26%),linear-gradient(180deg,rgba(255,255,255,0.03),transparent_18%),linear-gradient(180deg,rgba(0,0,0,0.12),rgba(0,0,0,0.68)_38%,rgba(0,0,0,0.92)_72%,#000_100%),linear-gradient(90deg,#000_0%,rgba(0,0,0,0.88)_26%,rgba(0,0,0,0.34)_62%,rgba(0,0,0,0.86)_100%)]" />
-          <div className="absolute right-[-18%] top-16 h-56 w-56 rounded-full bg-[#F9B303]/16 blur-3xl" />
-          <div className="absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-black via-black/80 to-transparent" />
-
-          <div className="relative mx-auto flex min-h-[calc(112svh-7rem)] max-w-6xl flex-col justify-between">
-            <motion.div
-              initial={{ opacity: 0, y: 18 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="relative max-w-[20rem] pt-4"
-            >
-              <div className="pointer-events-none absolute -left-1 top-6 text-[5.4rem] font-semibold leading-none tracking-[-0.08em] text-white/[0.05]">
-                01
-              </div>
-              <div className="inline-flex items-center rounded-full border border-white/12 bg-black/35 px-4 py-2 text-[10px] uppercase tracking-[0.32em] text-[#F9B303] backdrop-blur">
-                Premium Vehicle Surface Studio
-              </div>
-              <h1 className="mt-5 text-[3.05rem] font-semibold leading-[0.9] tracking-[-0.075em] text-white">
-                Premium wraps,
-                <br />
-                tints, and PPF
-                <br />
-                for standout builds.
-              </h1>
-              <p className="mt-5 max-w-[18rem] text-sm leading-7 text-white/72">
-                A sharper mobile landing experience with the black sports car living in the background, not boxed off from the story.
-              </p>
-              <div className="mt-8 flex flex-col gap-3">
-                <Link
-                  to="/contact"
-                  className="inline-flex w-full items-center justify-center gap-3 rounded-full bg-[#F9B303] px-6 py-4 text-xs font-semibold uppercase tracking-[0.22em] text-black transition hover:-translate-y-0.5 hover:bg-white"
-                >
-                  Book Consultation <ChevronRight className="h-4 w-4" />
-                </Link>
-                <Link
-                  to="/shop"
-                  className="inline-flex w-full items-center justify-center gap-3 rounded-full border border-white/16 bg-black/32 px-6 py-4 text-xs font-semibold uppercase tracking-[0.22em] text-white backdrop-blur transition hover:-translate-y-0.5 hover:border-[#F9B303] hover:text-[#F9B303]"
-                >
-                  Browse Products <ChevronRight className="h-4 w-4" />
-                </Link>
-              </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.12 }}
-              className="relative z-10 grid grid-cols-1 gap-4"
-            >
-              {standards.map((item) => (
-                <div
-                  key={item.title}
-                  className="rounded-[26px] border border-white/10 bg-black/34 p-5 backdrop-blur-xl shadow-[0_20px_70px_rgba(0,0,0,0.34)]"
-                >
-                  <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-2xl bg-[#F9B303] text-black">
-                    <item.icon className="h-5 w-5" />
-                  </div>
-                  <div className="text-base font-semibold text-white">{item.title}</div>
-                  <p className="mt-2 text-sm leading-6 text-white/68">{item.desc}</p>
-                </div>
-              ))}
-            </motion.div>
-          </div>
-        </section>
-      ) : (
-        <div ref={storyRef} className="relative h-[330vh] bg-black md:h-[390vh]">
-          <PremiumExperienceOverlay scrollYProgress={scrollYProgress} />
-        </div>
-      )}
+      <div ref={storyRef} className="relative h-[900svh] bg-black sm:h-[960svh] md:h-[1100vh] xl:h-[1300vh]">
+        <PremiumExperienceOverlay scrollYProgress={scrollYProgress} />
+      </div>
 
       <section className="relative z-20 overflow-hidden bg-black px-5 py-16 text-white sm:px-6 md:px-12 md:py-24">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(249,179,3,0.08),transparent_36%),linear-gradient(180deg,rgba(255,255,255,0.03),transparent_28%)]" />
@@ -141,7 +55,7 @@ export const Home = () => {
                   Premium advice before premium installation.
                 </h2>
                 <p className="mt-4 text-sm leading-7 text-white/72">
-                  The scrollytelling now feels smoother and more futuristic, while the next section
+                  The opening story now feels calmer and more cinematic, while the next section
                   keeps the path simple: consultation, service choice, and product exploration.
                 </p>
               </div>

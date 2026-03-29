@@ -4,6 +4,9 @@ node_modules/
 # build output
 dist/
 
+# large frame sequences (keep the .webp outputs, avoid committing the .png originals)
+public/experience/frames/*.png
+
 # local env files
 .env
 .env.*.local
@@ -19,4 +22,3 @@ pnpm-debug.log*
 Thumbs.db
 .vscode/
 .idea/
-
